@@ -46,7 +46,11 @@ class RecintosZoo {
             // Verifica condições específicas para Hipopotamo e Macaco
             if (tipoAnimal === 'HIPOPOTAMO') {
                 if (recinto.bioma !== 'savana e rio' && recinto.bioma !== 'rio' && recinto.animais.length > 0) return false;
-                if (recinto.bioma === 'rio' && recinto.animais.length > 0) return false;
+                if (recinto.bioma === 'rio' && recinto.animais.length > 0) {
+                    // Permite se o único animal no recinto for um hipopótamo
+                    if (!recinto.animais.every(a => a.especie === 'HIPOPOTAMO')) return false;
+                }
+                
             }
             if (tipoAnimal === 'MACACO' && quantidade === 1 && recinto.animais.length === 0) return false;
             if (recinto.animais.some(a => a.especie === 'HIPOPOTAMO') && recinto.bioma !== 'savana e rio') return false;
@@ -78,7 +82,7 @@ class RecintosZoo {
         }
 
         return { recintosViaveis };
-    }
+   }
 }
 
 export { RecintosZoo as RecintosZoo };
