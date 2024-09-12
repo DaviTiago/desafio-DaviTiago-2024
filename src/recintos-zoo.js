@@ -9,7 +9,6 @@ class RecintosZoo {
             { numero: 5, bioma: 'savana', tamanhoTotal: 9, animais: [{ especie: 'LEAO', quantidade: 1 }] },
         ];
 
-
         this.animais = {
             LEAO: { tamanho: 3, bioma: ['savana', 'savana e rio'], carnívoro: true },
             LEOPARDO: { tamanho: 2, bioma: ['savana', 'savana e rio'], carnívoro: true },
@@ -82,5 +81,4 @@ class RecintosZoo {
         return { recintosViaveis };
     }
 }
-
 export { RecintosZoo as RecintosZoo };
