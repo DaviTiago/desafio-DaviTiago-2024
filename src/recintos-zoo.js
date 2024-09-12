@@ -3,22 +3,34 @@ import { Animal } from './Animal.js';
 
 class RecintosZoo {
     constructor() {
-        this.recintos = [
+        this.recintos = this.inicializarRecintos();
+        this.animais = this.inicializarAnimais();
+    }
+
+    inicializarRecintos() {
+        return [
             new Recinto(1, 'savana', 10, [{ especie: 'MACACO', quantidade: 3 }]),
             new Recinto(2, 'floresta', 5, []),
             new Recinto(3, 'savana e rio', 7, [{ especie: 'GAZELA', quantidade: 1 }]),
             new Recinto(4, 'rio', 8, []),
             new Recinto(5, 'savana', 9, [{ especie: 'LEAO', quantidade: 1 }]),
         ];
+    }
 
-        this.animais = {
-            LEAO: new Animal('LEAO', 3, ['savana', 'savana e rio'], true),
-            LEOPARDO: new Animal('LEOPARDO', 2, ['savana', 'savana e rio'], true),
-            CROCODILO: new Animal('CROCODILO', 3, ['rio', 'savana e rio'], true),
-            MACACO: new Animal('MACACO', 1, ['savana', 'floresta', 'savana e rio'], false),
-            GAZELA: new Animal('GAZELA', 2, ['savana', 'savana e rio'], false),
-            HIPOPOTAMO: new Animal('HIPOPOTAMO', 4, ['rio', 'savana e rio'], false)
-        };
+    inicializarAnimais() {
+        const definicoesAnimais = [
+            { tipo: 'LEAO', tamanho: 3, bioma: ['savana', 'savana e rio'], carnivoro: true },
+            { tipo: 'LEOPARDO', tamanho: 2, bioma: ['savana', 'savana e rio'], carnivoro: true },
+            { tipo: 'CROCODILO', tamanho: 3, bioma: ['rio', 'savana e rio'], carnivoro: true },
+            { tipo: 'MACACO', tamanho: 1, bioma: ['savana', 'floresta', 'savana e rio'], carnivoro: false },
+            { tipo: 'GAZELA', tamanho: 2, bioma: ['savana', 'savana e rio'], carnivoro: false },
+            { tipo: 'HIPOPOTAMO', tamanho: 4, bioma: ['rio', 'savana e rio'], carnivoro: false }
+        ];
+
+        return definicoesAnimais.reduce((acc, { tipo, tamanho, bioma, carnivoro }) => {
+            acc[tipo] = new Animal(tipo, tamanho, bioma, carnivoro);
+            return acc;
+        }, {});
     }
 
     analisaRecintos(tipoAnimal, quantidade) {
