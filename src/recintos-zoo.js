@@ -12,12 +12,12 @@ class RecintosZoo {
         ];
 
         this.animais = {
-            LEAO: new Animal(3, ['savana', 'savana e rio'], true),
-            LEOPARDO: new Animal(2, ['savana', 'savana e rio'], true),
-            CROCODILO: new Animal(3, ['rio', 'savana e rio'], true),
-            MACACO: new Animal(1, ['savana', 'floresta', 'savana e rio'], false),
-            GAZELA: new Animal(2, ['savana', 'savana e rio'], false),
-            HIPOPOTAMO: new Animal(4, ['rio', 'savana e rio'], false)
+            LEAO: new Animal('LEAO', 3, ['savana', 'savana e rio'], true),
+            LEOPARDO: new Animal('LEOPARDO', 2, ['savana', 'savana e rio'], true),
+            CROCODILO: new Animal('CROCODILO', 3, ['rio', 'savana e rio'], true),
+            MACACO: new Animal('MACACO', 1, ['savana', 'floresta', 'savana e rio'], false),
+            GAZELA: new Animal('GAZELA', 2, ['savana', 'savana e rio'], false),
+            HIPOPOTAMO: new Animal('HIPOPOTAMO', 4, ['rio', 'savana e rio'], false)
         };
     }
 
@@ -51,9 +51,7 @@ class RecintosZoo {
             if (tipoAnimal === 'MACACO' && quantidade === 1 && recinto.animais.length === 0) return false;
             if (recinto.animais.some(a => a.especie === 'HIPOPOTAMO') && recinto.bioma !== 'savana e rio') return false;
 
-            const ocupacaoAtual = recinto.animais.reduce((acc, a) => acc + (this.animais[a.especie].tamanho * a.quantidade), 0);
-            const espacoNecessario = quantidade * animal.tamanho;
-            const espacoLivre = recinto.tamanhoTotal - ocupacaoAtual - espacoNecessario;
+            const espacoLivre = recinto.calcularEspacoLivre(this.animais, tipoAnimal, quantidade);
 
             return espacoLivre >= 0;
         };
@@ -62,10 +60,7 @@ class RecintosZoo {
 
         for (const recinto of this.recintos) {
             if (recintoViavel(recinto)) {
-                const ocupacaoAtual = recinto.animais.reduce((acc, a) => acc + (this.animais[a.especie].tamanho * a.quantidade), 0);
-                const espacoNecessario = quantidade * animal.tamanho;
-                const espacoExtra = recinto.animais.length > 0 && recinto.animais[0].especie !== tipoAnimal ? 1 : 0;
-                const espacoLivre = recinto.tamanhoTotal - ocupacaoAtual - espacoNecessario - espacoExtra;
+                const espacoLivre = recinto.calcularEspacoLivre(this.animais, tipoAnimal, quantidade);
                 recintosViaveis.push(`Recinto ${recinto.numero} (espaço livre: ${espacoLivre} total: ${recinto.tamanhoTotal})`);
             }
         }
@@ -78,4 +73,4 @@ class RecintosZoo {
     }
 }
 
-export { RecintosZoo };
+export { RecintosZoo as RecintosZoo };
